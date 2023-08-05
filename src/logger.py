@@ -1,16 +1,32 @@
+# Import logging module
 import logging
-import os
-from datetime import datetime
 
-LOG_FILE = f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
-logs_path = os.path.join(os.getcwd(), "logs", LOG_FILE)
-os.makedirs(logs_path, exist_ok=True)
+# Create a logger object
+logger = logging.getLogger("my_logger")
 
-LOF_FILE_PATH = os.path.join(logs_path,LOG_FILE)
+# Set the level of the logger
+logger.setLevel(logging.DEBUG)
 
-logging.basicConfig(
-    filename=LOF_FILE_PATH,
-    format="[ %(asctime)s ]  %(lineno)d %(name)s - %(levelname)s - %(messege)s",
-    level= logging.INFO,
-)
+# Create a file handler object
+file_handler = logging.FileHandler("my_log.txt")
+
+# Set the level of the file handler
+file_handler.setLevel(logging.INFO)
+
+# Create a stream handler object
+stream_handler = logging.StreamHandler()
+
+# Set the level of the stream handler
+stream_handler.setLevel(logging.DEBUG)
+
+# Create a formatter object
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+
+# Add the formatter to the handlers
+file_handler.setFormatter(formatter)
+stream_handler.setFormatter(formatter)
+
+# Add the handlers to the logger
+logger.addHandler(file_handler)
+logger.addHandler(stream_handler)
 
