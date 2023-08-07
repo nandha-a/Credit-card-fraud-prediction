@@ -6,6 +6,9 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
+from src.components.data_transformation import DataTransformation
+from src.components.data_transformation import DataFormationConfig
+
 
 @dataclass
 class DataOIngestionConfig:
@@ -21,6 +24,14 @@ class DataIngestion:
         logger.info('Entered data ingestion component')
         try:
             df = pd.read_csv('Data\creditcard.csv')
+            df = df.dropna()
+            q1 = df['Amount'].quantile(0.25)
+            q3 = df['Amount'].quantile(0.75)
+            iqr = q3 - q1
+            high = q3 + (1.5*iqr)
+            low = q1 - (1.5*iqr)
+            df = df[(df['Amount']>low) & (df['Amount']<high)]
+
             logger.info('Dataset readed and DataFrame created')
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok=True)
@@ -42,3 +53,10 @@ class DataIngestion:
         except Exception as e:
             raise CustomException(e, sys)
         
+
+if __name__ == '__main__':
+    obj=DataIngestion()
+    train_data, test_data = obj.initiate_data_ingestion()
+
+    data_transformation = DataTransformation()
+    data_transformation.intitiate_data_transformation(train_data, test_data)
