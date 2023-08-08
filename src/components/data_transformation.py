@@ -3,9 +3,7 @@ import os
 from dataclasses import dataclass
 import numpy as np
 import pandas as pd
-from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
-from sklearn.compose import ColumnTransformer
 
 from src.exception import CustomException
 from src.logger import logger
@@ -13,25 +11,21 @@ from src.utils import save_object
 
 @dataclass
 class DataFormationConfig:
-    preprocessor_ob_file_path = os.path.join('artifacts.preprocesssor.pkl')
+    preprocessor_ob_file_path = os.path.join('artifacts\preprocesssor.pkl')
 
 class DataTransformation:
     def __init__(self):
         self.data_transformation_config = DataFormationConfig()
 
-    def get_data_transformaer_ob(self):
+    def data_transformaer_ob(self):
         try:
-            
-            columns_list = ['Amount','Time']
-            model_pipeline = Pipeline(
-                steps= [('scaler',StandardScaler())]
-            )
-            
-            logger.info('Standard scaling completed')
 
-            preprocessor = ColumnTransformer(['mo_pipeline',model_pipeline, columns_list])
+            scaler = StandardScaler()
+            
+            logger.info('Standard scaling initiated')
 
-            return preprocessor
+            return scaler
+        
         except Exception as e:
             raise logger.info(CustomException(e,sys))
             
@@ -45,11 +39,12 @@ class DataTransformation:
 
             logger.info('Obtaining preprocessing object')
 
-            preprocessing_obj=self.get_data_transformaer_ob()
+            preprocessing_obj=self.data_transformaer_ob()
 
             target_column = 'Class'
+            columns_list = ['Amount','Time']
 
-            input_feature_train = train_df.drop([target_column], axis=1)
+            input_feature_train = train_df.drop(columns=[target_column], axis=1)
             target_feature_train = train_df[target_column]
 
             input_feature_test = test_df.drop([target_column], axis=1)
@@ -67,7 +62,8 @@ class DataTransformation:
 
             save_object(
                 file_path = self.data_transformation_config.preprocessor_ob_file_path,
-                obj = preprocessing_obj
+                train = train_arr,
+                test = test_arr
             )
 
             return(
