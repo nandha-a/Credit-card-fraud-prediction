@@ -28,8 +28,7 @@ class DataTransformation:
         
         except Exception as e:
             raise logger.info(CustomException(e,sys))
-            
-            
+             
 
     def intitiate_data_transformation(self,train_path,test_path):
         try:

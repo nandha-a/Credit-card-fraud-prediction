@@ -1,9 +1,0 @@
-2023-08-08 10:21:21,378 - my_logger - INFO - Entered data ingestion component
-2023-08-08 10:21:21,634 - my_logger - INFO - Dataset readed and DataFrame created
-2023-08-08 10:21:22,554 - my_logger - INFO - Train test split initiated
-2023-08-08 10:21:23,349 - my_logger - INFO - Ingestion of the data is completed
-2023-08-08 10:21:23,563 - my_logger - INFO - Read train and Test data is completed
-2023-08-08 10:21:23,563 - my_logger - INFO - Obtaining preprocessing object
-2023-08-08 10:21:23,563 - my_logger - INFO - Standard scaling initiated
-2023-08-08 10:21:23,571 - my_logger - INFO - Applying preprocessing object on training and testing dataframe
-2023-08-08 10:21:23,587 - my_logger - INFO - Saved preprocessing object

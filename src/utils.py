@@ -20,4 +20,3 @@ def save_object(file_path, train, test):
 
     except Exception as e:
         raise logger.info(CustomException(e,sys))
-    
