@@ -53,6 +53,7 @@ class DataIngestion:
         except Exception as e:
             raise logger.info(CustomException(e, sys))
         
+        
 
 if __name__ == '__main__':
     obj=DataIngestion()
