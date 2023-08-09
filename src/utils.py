@@ -4,7 +4,7 @@ import sys
 import numpy as np
 import pandas as pd
 import dill
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.metrics import accuracy_score
 
 from src.exception import CustomException
 from src.logger import logger
@@ -35,16 +35,16 @@ def evaluate_models(x_train,y_train,x_test,y_test,models):
 
             accuracyScore = accuracy_score(y_test, y_pred)
 
-            classificationReport = classification_report(y_test, y_pred)
-
-            confusionMatrix = confusion_matrix(y_test, y_pred)
-
             report[list(models.keys())[i]] = accuracyScore
 
-        x = max(report.values())
-        best_model = list(report.keys())[list(report.values()).index(x)]
-
-        return best_model
+        return report
 
     except Exception as e:
         raise logger.info(CustomException(e,sys))
+    
+def load_object(file_path):
+    try:
+        with open(file_path, "rb") as file_obj:
+            return dill.load(file_obj)
+    except Exception as e:
+        raise CustomException(e,sys)
