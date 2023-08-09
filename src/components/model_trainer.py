@@ -3,7 +3,6 @@ import sys
 from dataclasses import dataclass
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from src.exception import CustomException
 from src.logger import logger
 from src.utils import save_object, evaluate_models
@@ -35,10 +34,11 @@ class ModelTrainer:
 
             model_report:dict=evaluate_models(x_train=x_train,y_train=y_train,x_test=x_test,y_test=y_test,models=models)
 
+            logger.info('Model training completed and model evaluated')
+            
             save_object(
                 file_path= self.model_trainer_config.trained_model_file_path,
-                train= x_train,
-                test = x_test
+                obj=model_report
             )
 
             return model_report

@@ -62,8 +62,7 @@ class DataTransformation:
 
             save_object(
                 file_path = self.data_transformation_config.preprocessor_ob_file_path,
-                train = train_arr,
-                test = test_arr
+                obj = preprocessing_obj
             )
 
             return(
